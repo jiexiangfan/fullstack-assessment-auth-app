@@ -16,7 +16,7 @@ export const AuthContext = createContext<AuthState | null>(null);
 
 const STORAGE_KEY = "auth_token";
 
-export function AuthProvider({ children }: { children: React.ReactNode }) {
+function AuthProvider({ children }: { children: React.ReactNode }) {
   const [token, setToken] = useState<string | null>(() =>
     localStorage.getItem(STORAGE_KEY)
   );
@@ -53,7 +53,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (token) void refreshMe();
-  }, []); // initial load only
+  }, [token]);
 
   const value = useMemo<AuthState>(
     () => ({
@@ -70,3 +70,5 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
+
+export default AuthProvider;

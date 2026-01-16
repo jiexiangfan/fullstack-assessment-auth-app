@@ -1,11 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { apiSignup } from "../api/auth";
 import { useAuth } from "../auth/useAuth";
 
 export function SignUp() {
   const nav = useNavigate();
-  const { setSession } = useAuth();
+  const { token, setSession } = useAuth();
+
+  useEffect(() => {
+    if (token) {
+      nav("/profile", { replace: true });
+    }
+  }, [token, nav]);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

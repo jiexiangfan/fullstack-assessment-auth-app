@@ -2,7 +2,7 @@ import { useAuth } from "../auth/useAuth";
 import { apiSignout } from "../api/auth";
 
 export function Profile() {
-  const { user, token, clearSession, refreshMe } = useAuth();
+  const { user, clearSession } = useAuth();
 
   async function onLogout() {
     try {
@@ -19,9 +19,6 @@ export function Profile() {
       {!user ? (
         <div>
           <p>Loading user...</p>
-          <button onClick={() => void refreshMe()} disabled={!token}>
-            Retry
-          </button>
         </div>
       ) : (
         <div style={{ border: "1px solid #ddd", padding: 16, borderRadius: 8 }}>
@@ -37,11 +34,8 @@ export function Profile() {
         </div>
       )}
 
-      <div style={{ marginTop: 16, display: "flex", gap: 8 }}>
+      <div style={{ marginTop: 16 }}>
         <button onClick={onLogout}>Logout</button>
-        <button onClick={() => void refreshMe()} disabled={!token}>
-          Refresh
-        </button>
       </div>
     </div>
   );
